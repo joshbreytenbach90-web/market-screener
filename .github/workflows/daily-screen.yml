@@ -1,0 +1,35 @@
+name: Daily market screen
+
+on:
+  schedule:
+    - cron: "30 3 * * *"     # 03:30 UTC = 05:30 South Africa time, every day
+  workflow_dispatch:          # adds a "Run workflow" button for manual runs
+
+permissions:
+  contents: write             # lets the job save the CSV files back into the repo
+
+jobs:
+  screen:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install libraries
+        run: pip install -r requirements.txt
+
+      - name: Run screener
+        run: python market_screener.py
+
+      - name: Save results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898283+github-actions[bot]@users.noreply.github.com"
+          git add output ticker_cache
+          git diff --staged --quiet || git commit -m "Daily screen $(date -u +%F)"
+          git push
