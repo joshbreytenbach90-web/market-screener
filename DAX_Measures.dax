@@ -1,0 +1,28 @@
+// Create each with: Modeling > New measure (on the MarketScreen table)
+
+Company =
+SELECTEDVALUE ( MarketScreen[Display] )
+
+Why =
+SELECTEDVALUE ( MarketScreen[Reason] )
+
+Last Updated =
+"Data as at " & FORMAT ( MAX ( MarketScreen[RunTimestamp] ), "ddd dd MMM yyyy, HH:mm" )
+    & "  |  Source: Yahoo Finance (delayed)"
+
+Stale Data Warning =
+VAR LastRun = MAX ( MarketScreen[RunTimestamp] )
+RETURN
+    IF ( DATEDIFF ( LastRun, NOW (), HOUR ) > 30,
+         "⚠ Data is older than 30 hours – check the scheduled task", "" )
+
+Return 3M Colour =
+VAR r = SELECTEDVALUE ( MarketScreen[Return3M] )
+RETURN
+    SWITCH ( TRUE (), ISBLANK ( r ), "#808080", r >= 0, "#1B7F3B", "#B3261E" )
+
+Avg Score =
+AVERAGE ( MarketScreen[Score] )
+
+// Column (not measure) – Modeling > New column – to sort Category in report order:
+// Category Sorted = MarketScreen[Category]  -> then Column tools > Sort by column > CategoryOrder

@@ -1,0 +1,15 @@
+{
+  "name": "Market Screener",
+  "dataColors": ["#1F4E79", "#1B7F3B", "#C9821B", "#6B4FA0", "#B3261E", "#2A9D8F"],
+  "background": "#FFFFFF",
+  "foreground": "#1A1A1A",
+  "tableAccent": "#1F4E79",
+  "good": "#1B7F3B",
+  "bad": "#B3261E",
+  "neutral": "#C9821B",
+  "textClasses": {
+    "title": { "fontFace": "Segoe UI Semibold", "fontSize": 14, "color": "#1A1A1A" },
+    "header": { "fontFace": "Segoe UI Semibold", "fontSize": 11, "color": "#1A1A1A" },
+    "label": { "fontFace": "Segoe UI", "fontSize": 10, "color": "#444444" }
+  }
+}
